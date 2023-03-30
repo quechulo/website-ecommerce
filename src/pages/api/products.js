@@ -5,7 +5,7 @@ const DATABASE = 'products';
 
 async function connectDatabase() {
   return await MongoClient.connect(
-    `mongodb+srv://Admindb:${password}@cluster0.bmmwhmg.mongodb.net/${DATABASE}?retryWrites=true&w=majority`
+    `mongodb+srv://Admindb:${password}@cluster0.bmmwhmg.mongodb.net/?retryWrites=true&w=majority`
   );
 }
 
@@ -55,11 +55,11 @@ async function handler(req, res) {
     try {
       client = await connectDatabase();
     } catch (error) {
-      res.status(500).json({ message: "Connection to database failed!" });
+      res.status(500).json({ message: "Connection to database failed!" + error.message });
       return;
     }
     try {
-      const db = client.db();
+      const db = client.db(DATABASE);
       const documents = await db.collection("shoes").find().toArray();
       res.status(201).json({ shoes: documents });
     } catch (error) {
