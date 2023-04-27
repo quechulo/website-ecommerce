@@ -10,33 +10,35 @@ export default function Navbar() {
         Buy Stuff
       </Link>
       <ul className={styles["navbar-nav"]}>
-        <Dropdown className={styles["nav-item"]} title="Products">
-          <Dropdown.Item>Category1</Dropdown.Item>
+        <Dropdown className={styles["nav-item"]} title="Produkty">
+          <Dropdown.Item as="a" style={{ textDecoration: "none" }} href="/produkty/buty">
+            Buty
+          </Dropdown.Item>
 
-          <Dropdown.Item as="a" style={{textDecoration:'none'}} href="/">
-            Category2
+          <Dropdown.Item as="a" style={{ textDecoration: "none" }} href="/produkty/ubrania">
+            Ubrania
           </Dropdown.Item>
 
           <Dropdown.Item as="a" href="/">
-            Category3
+            Inne
           </Dropdown.Item>
         </Dropdown>
         {/* <Link href="/products" className={styles['nav-link']}>Products</Link> */}
 
         <li className={styles["nav-item"]}>
-          <Link className={styles["nav-link"]} href="/about" >
-            About
+          <Link className={styles["nav-link"]} href="/about">
+            O nas
           </Link>
         </li>
         <li className={styles["nav-item"]}>
           <Link href="/cart" className={styles["nav-link"]}>
-            Cart
+            Koszyk
           </Link>
         </li>
 
         <li className={styles["nav-item"]}>
           <Link href="/account" className={styles["nav-link"]}>
-            Account
+            Konto
           </Link>
         </li>
       </ul>

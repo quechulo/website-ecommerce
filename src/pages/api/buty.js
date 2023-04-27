@@ -9,20 +9,6 @@ async function connectDatabase() {
   );
 }
 
-async function insertDocument(client, document) {
-  const db = client.db();
-
-  const documents = await db
-    .collection("emails")
-    .find({ email: document.email })
-    .toArray();
-
-  if (documents.length < 1) {
-    await db.collection("emails").insertOne(document);
-  } else {
-    throw Error( "Email already in use: " + document.email );
-  }
-}
 
 async function handler(req, res) {
   if (req.method === "POST") {
