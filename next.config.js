@@ -22,7 +22,18 @@ module.exports = {
         protocol: 'https',
         hostname: 'img01.ztat.net',
       },
-      
+      {
+        protocol: 'https',
+        hostname: 'limango-res.cloudinary.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'desportivo.pl',
+      },
+      {
+        protocol: 'https',
+        hostname: 'encrypted-tbn1.gstatic.com',
+      },
     ],
   },
 }

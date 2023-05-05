@@ -17,7 +17,7 @@ const ProductItem = ({ product, onProductClick }) => {
         </div>
         <div className={styles.productItemInfo}>
           <h2>{product.name}</h2>
-          <p>${product.price}</p>
+          <p>{product.price} PLN</p>
         </div>
       </div>
     );

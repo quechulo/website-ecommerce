@@ -1,7 +1,19 @@
-const AllClothesPage = () => {
+import ProductList from "@/components/products/ProductList/ProductList";
+
+const AllClothesPage = ({ products }) => {
     return (
-        <h1>Welcome to ubrania page!</h1>
+        <ProductList products={products.clothes} />
     )
 }
 
 export default AllClothesPage;
+
+export async function getStaticProps() {
+    const res = await fetch("http://localhost:3000/api/ubrania");
+    const products = await res.json();
+    return {
+      props: {
+        products,
+      },
+    };
+  }

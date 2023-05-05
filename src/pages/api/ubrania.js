@@ -22,8 +22,8 @@ async function handler(req, res) {
     }
     try {
       const db = client.db(DATABASE);
-      const documents = await db.collection("shoes").find().toArray();
-      res.status(201).json({ shoes: documents });
+      const documents = await db.collection("clothes").find().toArray();
+      res.status(201).json({ clothes: documents });
     } catch (error) {
       res.status(500).json({ message: "Reading from database failed!" });
       return;
