@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import styles from "./Chatbot.module.css";
 import Link from "next/link";
 
@@ -6,9 +6,26 @@ const Chatbot = () => {
   const [showChat, setShowChat] = useState(false);
   const messageInputRef = useRef();
   const [allMessages, setAllMessages] = useState([]);
-  // useEffect(() => {
-  //   handleLoadMessages();
-  // }, [allMessages]);
+  const [messagesList, setMessagesList] = useState([]);
+
+  useEffect(() => {
+    const messagesElements = allMessages.map((msg, index) => {   
+      if (index % 2 == 0) {
+        return (
+        <li key={index} className={styles.message + " " + styles.received}>
+          {msg}
+        </li>
+        )
+      } else {
+        return (
+        <li key={index} className={styles.message + " " + styles.sent}>
+          {msg}
+        </li>
+        )
+      }
+    });
+    setMessagesList(messagesElements);
+  }, [allMessages]);
 
   const sendMessageHandler = (event) => {
     event.preventDefault();
@@ -45,7 +62,8 @@ const Chatbot = () => {
     fetch("http://127.0.0.1:5000/receive")
       .then((response) => response.json())
       .then((data) => {
-        handleMessages(data.messages);
+        // handleMessages(data.messages);
+        setAllMessages(data.messages);
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -56,18 +74,17 @@ const Chatbot = () => {
     setShowChat(!showChat);
   };
 
+  
+
   return (
     <>
       <div className={styles.chatbot}>
         {showChat && (
           <div className={styles.container}>
             <div className={styles.messageContainer}>
-              <ul>
-                {allMessages.map((msg) => (
-                  <li key="1">{msg}</li>
-                ))}
+              <ul className={styles.messages}>
+                {messagesList}
               </ul>
-              <button onClick={handleLoadMessages}>Load Messages</button>
             </div>
             <div className={styles.inputContainer}>
               <input
@@ -77,7 +94,12 @@ const Chatbot = () => {
                 placeholder="Zadaj mi pytanie :)"
               />
               <button className={styles.button} onClick={sendMessageHandler}>
-                <img src="/icons8-send.png" alt="send icon" width='25' height='25' />
+                <img
+                  src="/icons8-send.png"
+                  alt="send icon"
+                  width="25"
+                  height="25"
+                />
               </button>
             </div>
           </div>

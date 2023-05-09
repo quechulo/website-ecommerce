@@ -5,12 +5,12 @@ function AboutPage() {
   return (
     <>
       <Head>
-        <title>About</title>
+        <title>O Nas</title>
         <meta name="description" content="About Page" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <div>About Page</div>
+        <div>O Nas</div>
         <h3>
           Witamy w naszym sklepie Buy Stuff. W naszej ofercie posiadamy wiele
           markowych butów i ubrań. Oferujemy najlepsze ceny i staramy się
