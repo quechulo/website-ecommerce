@@ -1,5 +1,5 @@
 .chatbot {
-  position: absolute;
+  position: fixed;
   bottom: 20px;
   right: 20px;
   z-index: 9999;
@@ -37,7 +37,6 @@
 }
 
 .messageContainer {
-  flex: 1;
   padding: 10px;
 }
 
@@ -48,8 +47,9 @@
 }
 
 .message {
-  display: inline-block;
-  max-width: 60%;
+  display: block;
+  width: fit-content;
+  max-width: 70%;
   margin: 10px;
   padding: 10px;
   border-radius: 10px;
@@ -62,6 +62,7 @@
   background-color: #007aff;
   color: #fff;
   float: right;
+  margin-left: 30%;
 }
 
 .received {
@@ -74,15 +75,21 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  position: sticky;
   padding: 10px;
+  border-radius: 5px;
+  background-color: #cecece;
 }
 
 .input {
-  flex: 1;
   margin-right: 10px;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
+  width: 361px;
+}
+.input:focus {
+  outline: #ffff00;
 }
 
 .button {

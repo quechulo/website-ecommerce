@@ -9,34 +9,42 @@ const Chatbot = () => {
   const [messagesList, setMessagesList] = useState([]);
 
   useEffect(() => {
-    const messagesElements = allMessages.map((msg, index) => {   
-      if (index % 2 == 0) {
+    const messagesElements = allMessages.map((msg, index) => {
+      if (msg[1] == "user") {
         return (
-        <li key={index} className={styles.message + " " + styles.received}>
-          {msg}
-        </li>
-        )
+          <li key={index} className={styles.message + " " + styles.sent}>
+            {msg[0]}
+          </li>
+        );
       } else {
         return (
-        <li key={index} className={styles.message + " " + styles.sent}>
-          {msg}
-        </li>
-        )
+          <li key={index} className={styles.message + " " + styles.received}>
+            {msg[0]}
+          </li>
+        );
       }
     });
     setMessagesList(messagesElements);
   }, [allMessages]);
 
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      sendMessageHandler(event);
+    }
+  };
+
   const sendMessageHandler = (event) => {
     event.preventDefault();
     const enteredText = messageInputRef.current.value;
+    messageInputRef.current.value = " ";
 
     fetch("http://127.0.0.1:5000/send", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ message: enteredText }),
+      body: JSON.stringify({ message: enteredText, sender: "user" }),
     })
       .then((response) => response.json())
       .then((data) => {
@@ -48,6 +56,7 @@ const Chatbot = () => {
       });
   };
 
+  // TODO - handle links as html elements
   const handleMessages = (messages) => {
     let answer = messages[messages.length - 1];
     let start_index = answer.indexOf("http");
@@ -74,22 +83,19 @@ const Chatbot = () => {
     setShowChat(!showChat);
   };
 
-  
-
   return (
     <>
       <div className={styles.chatbot}>
         {showChat && (
           <div className={styles.container}>
             <div className={styles.messageContainer}>
-              <ul className={styles.messages}>
-                {messagesList}
-              </ul>
+              <ul className={styles.messages}>{messagesList}</ul>
             </div>
             <div className={styles.inputContainer}>
               <input
                 className={styles.input}
                 type="text"
+                onKeyUp={handleKeyPress}
                 ref={messageInputRef}
                 placeholder="Zadaj mi pytanie :)"
               />
