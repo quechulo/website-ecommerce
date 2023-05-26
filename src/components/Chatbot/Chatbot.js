@@ -7,6 +7,7 @@ const Chatbot = () => {
   const messageInputRef = useRef();
   const [allMessages, setAllMessages] = useState([]);
   const [messagesList, setMessagesList] = useState([]);
+  const [sendEndpoint, setSendEndpoint] = useState("send-fresh");
 
   useEffect(() => {
     const messagesElements = allMessages.map((msg, index) => {
@@ -39,7 +40,7 @@ const Chatbot = () => {
     const enteredText = messageInputRef.current.value;
     messageInputRef.current.value = " ";
 
-    fetch("http://127.0.0.1:5000/send", {
+    fetch(`http://127.0.0.1:5000/${sendEndpoint}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -50,6 +51,22 @@ const Chatbot = () => {
       .then((data) => {
         console.log("Success from index:", data);
         handleLoadMessages();
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+
+    setSendEndpoint("send");
+  };
+
+  const handleChangeContext = () => {
+    setSendEndpoint("send-fresh");
+    setAllMessages([]);
+    fetch("http://127.0.0.1:5000/fresh-conversation")
+      .then((response) => response.json())
+      .then((data) => {
+        // handleMessages(data.messages);
+        console.log(data.status);
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -90,6 +107,9 @@ const Chatbot = () => {
           <div className={styles.container}>
             <div className={styles.messageContainer}>
               <ul className={styles.messages}>{messagesList}</ul>
+            </div>
+            <div className={styles.buttonContainer}>
+              <button className={styles.button} onClick={handleChangeContext}>Zmień temat rozmowy</button>
             </div>
             <div className={styles.inputContainer}>
               <input
