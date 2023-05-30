@@ -11,7 +11,7 @@ function HomePage() {
     <main>
       <div>Homepage content</div>
     </main>
-  );
+  )
 }
 
 export default HomePage;
