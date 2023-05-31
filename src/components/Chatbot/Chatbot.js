@@ -147,7 +147,7 @@ const Chatbot = () => {
           </div>
         )}
         {showChat ? (
-          <img className={styles["icon-smaller"]} src="/exit-arrow.png" onClick={handleToggle} alt="Close chatbot icon" />
+          <img className={styles["icon-smaller"]} src="/down-arrow.png" onClick={handleToggle} alt="Close chatbot icon" />
         ) : (
           <img className={styles.icon} src="/icons8-chatbot.png" onClick={handleToggle} alt="Chatbot icon" />
         )}

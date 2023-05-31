@@ -20,15 +20,15 @@
   transition: transform 0.2s ease-in-out;
 }
 .icon-smaller {
-  width: 60px;
-  height: 60px;
+  width: 70px;
+  height: 70px;
   margin: 20px;
   cursor: pointer;
   transition: transform 0.2s ease-in-out;
 }
 
 .icon:hover, .icon-smaller:hover {
-  transform: scale(1.2);
+  transform: scale(1.1);
 }
 
 
@@ -44,7 +44,7 @@
   justify-content: space-between;
   overflow-y: auto;
   font-size: medium;
-  background-color: #c9ddfc;
+  background-color: #d8f1fa;
 }
 
 .messageContainer {
@@ -83,11 +83,11 @@
 .sent {
   color: #fff;
   float: right;
-  background-color: #007aff;
+  background-color: #008adf;
 }
 
 .received {
-  background-color: #f2f2f2;
+  background-color: #98dff9;
   color: #333;
   float: left;
 }
@@ -97,8 +97,8 @@
   align-items: center;
   justify-content: space-evenly;
   padding: 10px;
-  border-radius: 5px;
-  background-color: #cecece;
+  border-radius: 0 5px 5px 0;
+  background-color: #98dff9;
 }
 
 .inputContainer.input {
@@ -125,7 +125,7 @@
 .button {
   padding: 10px;
   border-radius: 5px;
-  background-color: #007aff;
+  background-color: #008adf;
   color: #fff;
   border: none;
   cursor: pointer;
