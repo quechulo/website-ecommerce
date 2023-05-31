@@ -63,7 +63,8 @@ const Chatbot = () => {
       .then((response) => response.json())
       .then((data) => {
         console.log("Message successfully sent:", data);
-        if (
+
+        if ( // Don't change sendEndpoint if question was outside of ecommerce context
           !data.answer.includes(
             "Niestety nie jestem w stanie odpowiedzieć na to pytanie,"
           )
