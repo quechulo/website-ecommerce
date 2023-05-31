@@ -1,47 +1,68 @@
 .chatbot {
   position: fixed;
-  bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  bottom: 30px;
   right: 20px;
-  z-index: 9999;
+  width: 60%;
+  min-width: 250px;
+  max-width: 600px;
+  
 }
 
 .icon {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 80px;
-  height: 80px;
+  width: 90px;
+  height: 90px;
   margin: 20px;
-  border: none;
-  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+.icon-smaller {
+  width: 60px;
+  height: 60px;
+  margin: 20px;
   cursor: pointer;
   transition: transform 0.2s ease-in-out;
 }
 
-.icon:hover {
-  transform: scale(1.1);
+.icon:hover, .icon-smaller:hover {
+  transform: scale(1.2);
 }
 
+
 .container {
-  border: 1px solid #ccc;
+  border: 1px solid #cecece;
   border-radius: 5px;
   bottom: 100px;
   right: 20px;
-  height: 500px;
-  width: 450px;
+  height: 550px;
+  
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   overflow-y: auto;
   font-size: medium;
-  background-color: #c0d8fb;
+  background-color: #c9ddfc;
 }
 
 .messageContainer {
-  padding: 10px;
+  display: block;
+  padding: 10px 0px 5px 10px;
+}
+
+.messageCloudSent {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+.messageCloudReceived {
+  width: 100%;
+  display: flex;
 }
 
 .messages {
-  list-style: none;
   padding: 0;
   margin: 0;
 }
@@ -60,10 +81,9 @@
 }
 
 .sent {
-  background-color: #007aff;
   color: #fff;
   float: right;
-  margin-left: 30%;
+  background-color: #007aff;
 }
 
 .received {
@@ -75,11 +95,20 @@
 .inputContainer {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  position: sticky;
+  justify-content: space-evenly;
   padding: 10px;
   border-radius: 5px;
   background-color: #cecece;
+}
+
+.inputContainer.input {
+  width: 250px;
+}
+
+.containerBottom {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .input {
@@ -87,7 +116,7 @@
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  width: 361px;
+  width: 100%;
 }
 .input:focus {
   outline: #ffff00;
@@ -100,4 +129,8 @@
   color: #fff;
   border: none;
   cursor: pointer;
+}
+
+.chatbot-img {
+  margin-top: 15px;
 }

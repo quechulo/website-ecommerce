@@ -13,15 +13,26 @@ const Chatbot = () => {
     const messagesElements = allMessages.map((msg, index) => {
       if (msg[1] == "user") {
         return (
-          <li key={index} className={styles.message + " " + styles.sent}>
-            {msg[0]}
-          </li>
+          <div className={styles.messageCloudSent}>
+            <div className={styles.message + " " + styles.sent}>
+              {msg[0]}
+            </div>
+          </div>
         );
       } else {
         return (
-          <li key={index} className={styles.message + " " + styles.received}>
-            {msg[0]}
-          </li>
+          <div className={styles.messageCloudReceived}>
+            <img
+              className={styles["chatbot-img"]}
+              src="/icons8-chatbot.png"
+              alt="message chatbot icon"
+              width={50}
+              height={50}
+            />
+            <div className={styles.message + " " + styles.received}>
+              {msg[0]}
+            </div>
+          </div>
         );
       }
     });
@@ -97,6 +108,7 @@ const Chatbot = () => {
   };
 
   const handleToggle = () => {
+    handleLoadMessages();
     setShowChat(!showChat);
   };
 
@@ -105,34 +117,37 @@ const Chatbot = () => {
       <div className={styles.chatbot}>
         {showChat && (
           <div className={styles.container}>
-            <div className={styles.messageContainer}>
-              <ul className={styles.messages}>{messagesList}</ul>
-            </div>
-            <div className={styles.buttonContainer}>
-              <button className={styles.button} onClick={handleChangeContext}>Zmień temat rozmowy</button>
-            </div>
-            <div className={styles.inputContainer}>
-              <input
-                className={styles.input}
-                type="text"
-                onKeyUp={handleKeyPress}
-                ref={messageInputRef}
-                placeholder="Zadaj mi pytanie :)"
-              />
-              <button className={styles.button} onClick={sendMessageHandler}>
-                <img
-                  src="/icons8-send.png"
-                  alt="send icon"
-                  width="25"
-                  height="25"
-                />
+            <div className={styles.messageContainer}>{messagesList}</div>
+            <div className={styles.containerBottom}>
+              <button className={styles.button} onClick={handleChangeContext}>
+                Zmień temat rozmowy
               </button>
+              <div className={styles.inputContainer}>
+                <input
+                  className={styles.input}
+                  type="text"
+                  onKeyUp={handleKeyPress}
+                  ref={messageInputRef}
+                  placeholder="Zadaj mi pytanie :)"
+                />
+                <button className={styles.button} onClick={sendMessageHandler}>
+                  <img
+                    src="/icons8-send.png"
+                    alt="send icon"
+                    width="25"
+                    height="25"
+                  />
+                </button>
+              </div>
             </div>
           </div>
         )}
-        <button className={styles.icon} onClick={handleToggle}>
-          <img src="/icons8-chatbot.png" alt="Chatbot Icon" />
-        </button>
+        {showChat ? (
+          <img className={styles["icon-smaller"]} src="/exit-arrow.png" onClick={handleToggle} alt="Close chatbot icon" />
+        ) : (
+          <img className={styles.icon} src="/icons8-chatbot.png" onClick={handleToggle} alt="Chatbot icon" />
+        )}
+        
       </div>
       );
     </>
