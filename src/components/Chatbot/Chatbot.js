@@ -49,6 +49,10 @@ const Chatbot = () => {
   const sendMessageHandler = (event) => {
     event.preventDefault();
     const enteredText = messageInputRef.current.value;
+    if (enteredText.trim().length === 0) {
+      console.log("Empty message");
+      return;
+    }
     messageInputRef.current.value = " ";
 
     fetch(`http://127.0.0.1:5000/${sendEndpoint}`, {
