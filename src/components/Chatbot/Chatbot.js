@@ -14,9 +14,7 @@ const Chatbot = () => {
       if (msg[1] == "user") {
         return (
           <div className={styles.messageCloudSent}>
-            <div className={styles.message + " " + styles.sent}>
-              {msg[0]}
-            </div>
+            <div className={styles.message + " " + styles.sent}>{msg[0]}</div>
           </div>
         );
       } else {
@@ -64,14 +62,19 @@ const Chatbot = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("Success from index:", data);
+        console.log("Message successfully sent:", data);
+        if (
+          !data.answer.includes(
+            "Niestety nie jestem w stanie odpowiedzieć na to pytanie,"
+          )
+        ) {
+          setSendEndpoint("send");
+        }
         handleLoadMessages();
       })
       .catch((error) => {
         console.error("Error:", error);
       });
-
-    setSendEndpoint("send");
   };
 
   const handleChangeContext = () => {
@@ -147,11 +150,20 @@ const Chatbot = () => {
           </div>
         )}
         {showChat ? (
-          <img className={styles["icon-smaller"]} src="/down-arrow.png" onClick={handleToggle} alt="Close chatbot icon" />
+          <img
+            className={styles["icon-smaller"]}
+            src="/down-arrow.png"
+            onClick={handleToggle}
+            alt="Close chatbot icon"
+          />
         ) : (
-          <img className={styles.icon} src="/icons8-chatbot.png" onClick={handleToggle} alt="Chatbot icon" />
+          <img
+            className={styles.icon}
+            src="/icons8-chatbot.png"
+            onClick={handleToggle}
+            alt="Chatbot icon"
+          />
         )}
-        
       </div>
       );
     </>
