@@ -64,11 +64,15 @@ const Chatbot = () => {
       .then((data) => {
         console.log("Message successfully sent:", data);
 
-        if ( // Don't change sendEndpoint if question was outside of ecommerce context
-          !data.answer.includes(
+        if (
+          // Don't change sendEndpoint if question was outside of ecommerce context
+          data.answer.includes(
             "Niestety nie jestem w stanie odpowiedzieć na to pytanie,"
-          )
+          ) ||
+          data.sender === "bert"
         ) {
+          setSendEndpoint("send-fresh");
+        } else {
           setSendEndpoint("send");
         }
         handleLoadMessages();
