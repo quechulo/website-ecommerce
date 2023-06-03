@@ -8,6 +8,8 @@ const Chatbot = () => {
   const [allMessages, setAllMessages] = useState([]);
   const [messagesList, setMessagesList] = useState([]);
   const [sendEndpoint, setSendEndpoint] = useState("send-fresh");
+  const [loadingMsg, setLoadingMsg] = useState(false);
+  const [messageSent, setMessageSent] = useState("");
 
   useEffect(() => {
     const messagesElements = allMessages.map((msg, index) => {
@@ -47,11 +49,14 @@ const Chatbot = () => {
   const sendMessageHandler = (event) => {
     event.preventDefault();
     const enteredText = messageInputRef.current.value;
+    setMessageSent(enteredText);
     if (enteredText.trim().length === 0) {
       console.log("Empty message");
       return;
     }
     messageInputRef.current.value = " ";
+    // UX Sending Message Animation
+    setLoadingMsg(true);
 
     fetch(`http://127.0.0.1:5000/${sendEndpoint}`, {
       method: "POST",
@@ -117,6 +122,7 @@ const Chatbot = () => {
       .catch((error) => {
         console.error("Error:", error);
       });
+    setLoadingMsg(false);
   };
 
   const handleToggle = () => {
@@ -130,6 +136,7 @@ const Chatbot = () => {
         {showChat && (
           <div className={styles.container}>
             <div className={styles.messageContainer}>{messagesList}</div>
+
             <div className={styles.containerBottom}>
               <button className={styles.button} onClick={handleChangeContext}>
                 Zmień temat rozmowy
@@ -143,12 +150,16 @@ const Chatbot = () => {
                   placeholder="Zadaj mi pytanie :)"
                 />
                 <button className={styles.button} onClick={sendMessageHandler}>
-                  <img
-                    src="/icons8-send.png"
-                    alt="send icon"
-                    width="25"
-                    height="25"
-                  />
+                  {loadingMsg ? (
+                    <p className={styles["loading-spinner"]}></p>
+                  ) : (
+                    <img
+                      src="/icons8-send.png"
+                      alt="send icon"
+                      width="25"
+                      height="25"
+                    />
+                  )}
                 </button>
               </div>
             </div>
