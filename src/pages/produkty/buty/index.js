@@ -3,7 +3,9 @@ import ProductList from "@/components/products/ProductList/ProductList";
 const AllShoesPage = ({ products }) => {
 
     return (
+
         <ProductList products={products.shoes} />
+      
     )
 }
 

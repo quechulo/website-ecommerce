@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import { findProductById } from "../../../../db/db-utils";
+import Loading from "@/components/helpers/Loading";
 
 const ShoeIdPage = (props) => {
   const {...product} = props
@@ -8,8 +9,14 @@ const ShoeIdPage = (props) => {
 
   return (
     <>
-      <div>{product.brand}</div>
-      <div>{product.description}</div>
+    {!product ? (
+        <Loading />
+      ) : (
+        <>
+        <div>{product.brand}</div>
+        <div>{product.description}</div>
+        </>
+      )}
     </>
   );
 };
