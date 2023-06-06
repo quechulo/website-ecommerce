@@ -3,10 +3,13 @@ import styles from "./Navbar.module.css";
 import { Dropdown } from "rsuite";
 import "rsuite/dist/rsuite.min.css";
 import { useState, useEffect } from "react";
+import UButton from "../UI/UButton";
+import { useAuth } from '@clerk/nextjs';
 
 export default function Navbar() {
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const { isLoaded, userId, sessionId, getToken } = useAuth();
 
   useEffect(() => {
     const checkScreenWidth = () => {
@@ -31,48 +34,60 @@ export default function Navbar() {
         Buy Stuff
       </Link>
       {isMobile ? (
-        <Dropdown className={styles["navbar-nav"]} title="Menu">
-          <ul className={styles["navbar-menu"]}>
-            <Dropdown className={styles["nav-item"]} title="Produkty">
-              <Dropdown.Item
-                as="a"
-                style={{ textDecoration: "none" }}
-                href="/produkty/buty"
-              >
-                Buty
-              </Dropdown.Item>
+        <>
+          <Dropdown className={styles["navbar-nav"]} title="Menu">
+            <ul className={styles["navbar-menu"]}>
+              <Dropdown className={styles["nav-item"]} title="Produkty">
+                <Dropdown.Item
+                  as="a"
+                  style={{ textDecoration: "none" }}
+                  href="/produkty/buty"
+                >
+                  Buty
+                </Dropdown.Item>
 
-              <Dropdown.Item
-                as="a"
-                style={{ textDecoration: "none" }}
-                href="/produkty/ubrania"
-              >
-                Ubrania
-              </Dropdown.Item>
+                <Dropdown.Item
+                  as="a"
+                  style={{ textDecoration: "none" }}
+                  href="/produkty/ubrania"
+                >
+                  Ubrania
+                </Dropdown.Item>
 
-              <Dropdown.Item as="a" href="/">
-                Inne
-              </Dropdown.Item>
-            </Dropdown>
+                <Dropdown.Item as="a" href="/">
+                  Inne
+                </Dropdown.Item>
+              </Dropdown>
 
+              <li className={styles["nav-item"]}>
+                <Link className={styles["nav-link-menu"]} href="/about">
+                  O nas
+                </Link>
+              </li>
+              <li className={styles["nav-item"]}>
+                <Link href="/cart" className={styles["nav-link-menu"]}>
+                  Koszyk
+                </Link>
+              </li>
+
+            </ul>
+          </Dropdown>
+          {!userId ?(
+            <ul className={styles["navbar-nav"]}>
             <li className={styles["nav-item"]}>
-              <Link className={styles["nav-link-menu"]} href="/about">
-                O nas
-              </Link>
-            </li>
-            <li className={styles["nav-item"]}>
-              <Link href="/cart" className={styles["nav-link-menu"]}>
-                Koszyk
-              </Link>
-            </li>
-
-            <li className={styles["nav-item"]}>
-              <Link href="/account" className={styles["nav-link-menu"]}>
-                Konto
-              </Link>
-            </li>
+            <Link href="/sign-in" className={styles["nav-link"]}>
+              Konto
+            </Link>
+          </li>
           </ul>
-        </Dropdown>
+          ):(
+            <ul className={styles["navbar-nav"]}>
+            <li className={styles["nav-item"]}>
+              <UButton />
+            </li>
+            </ul>
+          )}
+        </>
       ) : (
         <ul className={styles["navbar-nav"]}>
           <Dropdown className={styles["nav-item"]} title="Produkty">
@@ -109,11 +124,22 @@ export default function Navbar() {
             </Link>
           </li>
 
-          <li className={styles["nav-item"]}>
+          {/* <li className={styles["nav-item"]}>
             <Link href="/account" className={styles["nav-link"]}>
               Konto
             </Link>
+          </li> */}
+          {!userId ?(
+            <li className={styles["nav-item"]}>
+            <Link href="/sign-in" className={styles["nav-link"]}>
+              Konto
+            </Link>
           </li>
+          ):(
+            <li className={styles["nav-item"]}>
+              <UButton />
+            </li>
+          )}
         </ul>
       )}
     </nav>

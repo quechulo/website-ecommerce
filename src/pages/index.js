@@ -17,7 +17,7 @@ function HomePage(props) {
     <div className={styles["homepage-container"]}>
       <main className={styles["main-content-container"]}>
         <div className={styles["first-row"]}>Homepage content</div>
-        <div className={styles["second-row"]}>Homepage content</div>
+        <div className={styles["second-row"]}>Main content</div>
         <div className={styles["third-row"]}>
           <ProductItem product={shoes[0]} />
           <ProductItem product={shoes[0]} />
