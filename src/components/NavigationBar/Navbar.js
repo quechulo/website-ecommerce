@@ -65,7 +65,7 @@ export default function Navbar() {
                 </Link>
               </li>
               <li className={styles["nav-item"]}>
-                <Link href="/cart" className={styles["nav-link-menu"]}>
+                <Link href="/koszyk" className={styles["nav-link-menu"]}>
                   Koszyk
                 </Link>
               </li>
@@ -119,7 +119,7 @@ export default function Navbar() {
             </Link>
           </li>
           <li className={styles["nav-item"]}>
-            <Link href="/cart" className={styles["nav-link"]}>
+            <Link href="/koszyk" className={styles["nav-link"]}>
               Koszyk
             </Link>
           </li>
