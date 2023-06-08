@@ -16,8 +16,23 @@ function HomePage(props) {
   return (
     <div className={styles["homepage-container"]}>
       <main className={styles["main-content-container"]}>
-        <div className={styles["first-row"]}>Homepage content</div>
-        <div className={styles["second-row"]}>Main content</div>
+        <div className={styles["first-row"]}>OUR Hot take</div>
+        <div className={styles["second-row"]}>
+          <div class={styles["cards"]}>
+            <div class={`${styles.blue} ${styles.card}`}>
+              <p class={styles["tip"]}>Buty</p>
+              <p class={styles["second-text"]}>Lorem Ipsum</p>
+            </div>
+            <div class={`${styles.blue} ${styles.card}`}>
+              <p class={styles["tip"]}>Dresy</p>
+              <p class={styles["second-text"]}>Lorem Ipsum</p>
+            </div>
+            <div class={`${styles.blue} ${styles.card}`}>
+              <p class={styles["tip"]}>T-shirty</p>
+              <p class={styles["second-text"]}>Lorem Ipsum</p>
+            </div>
+          </div>
+        </div>
         <div className={styles["third-row"]}>
           <ProductItem product={shoes[0]} />
           <ProductItem product={shoes[0]} />
