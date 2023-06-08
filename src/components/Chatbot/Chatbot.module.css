@@ -6,11 +6,17 @@
   align-items: flex-end;
   bottom: 30px;
   right: 20px;
-  width: 450px;
-  min-width: 250px;
-  max-width: 600px;
-  
+  width: 550px;
 }
+
+/* Media query for mobile devices */
+@media (max-width: 768px) {
+  .chatbot {
+    /* Special width for mobile view */
+    width: 90vw;
+  }
+}
+
 
 .icon {
   width: 90px;
@@ -37,8 +43,8 @@
   border-radius: 15px;
   bottom: 100px;
   right: 20px;
-  height: 550px;
-  width: auto;
+  height: 650px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

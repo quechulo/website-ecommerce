@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import styles from "./Chatbot.module.css";
 import Link from "next/link";
+import Image from "next/image";
 
 const Chatbot = () => {
   const [showChat, setShowChat] = useState(false);
@@ -153,7 +154,7 @@ const Chatbot = () => {
                   {loadingMsg ? (
                     <p className={styles["loading-spinner"]}></p>
                   ) : (
-                    <img
+                    <Image
                       src="/icons8-send.png"
                       alt="send icon"
                       width="25"
