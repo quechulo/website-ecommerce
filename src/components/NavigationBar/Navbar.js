@@ -59,16 +59,21 @@ export default function Navbar() {
                 </Dropdown.Item>
               </Dropdown>
 
-              <li className={styles["nav-item"]}>
-                <Link className={styles["nav-link-menu"]} href="/about">
-                  O nas
-                </Link>
-              </li>
-              <li className={styles["nav-item"]}>
-                <Link href="/koszyk" className={styles["nav-link-menu"]}>
+              <Dropdown.Item
+                  as="a"
+                  style={{ textDecoration: "none" }}
+                  href="/about"
+                >
+                  O Nas
+                </Dropdown.Item>
+                
+              <Dropdown.Item
+                  as="a"
+                  style={{ textDecoration: "none" }}
+                  href="/koszyk"
+                >
                   Koszyk
-                </Link>
-              </li>
+                </Dropdown.Item>
 
             </ul>
           </Dropdown>
