@@ -38,9 +38,9 @@ const ShoeIdPage = (props) => {
       </div>
       <div className={styles["description-block"]}>
         <div className={styles["description-content"]}>
+        <p id={styles["description-p"]}>{product.type} {product.brand} {product.name}</p>
         <p id={styles["description-p"]}>Opis:</p>
         <p id={styles["description-text"]}>{product.description}</p>
-          
         </div>
       </div>
     </div>
@@ -53,8 +53,6 @@ export async function getServerSideProps({ params }) {
   const { prodId } = params;
   let product = await findProductById(prodId, "shoes", "products");
   delete product._id;
-
-  
 
   return { props: { ...product } };
 }
