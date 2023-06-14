@@ -10,13 +10,13 @@ import { useEffect, useState } from "react";
 const ShoeIdPage = (props) => {
   const { ...product } = props;
   const { isLoaded, isSignedIn, user } = useUser()
+  const [userEmail, setUserEmail] = useState(null)
 
-  // useEffect(() => {
-  //   if (!isLoaded || !isSignedIn) {
-  //     return null
-  //   }
-  //   console.log("userId", user.emailAddresses[0].emailAddress);
-  // }, [isLoaded, isSignedIn, user]);
+  useEffect(() => {
+    if (isLoaded && user) {
+      setUserEmail(user.emailAddresses[0].emailAddress)
+    }
+  }, [isLoaded, user]);
 
   
 
@@ -32,7 +32,7 @@ const ShoeIdPage = (props) => {
         <p id={styles["cena-p"]}>Cena: {product.price} PLN</p>
         <div className={styles["aside-bottom"]}>
           <div className={styles["color-content"]}>Kolor: {product.color}</div>
-          <AddToCart product={product} user={user} />
+          <AddToCart product={product} userEmail={userEmail} />
           {/*  */}
         </div>
       </div>
@@ -52,9 +52,8 @@ export default ShoeIdPage;
 export async function getServerSideProps({ params }) {
   const { prodId } = params;
   let product = await findProductById(prodId, "shoes", "products");
-  delete product._id;
-
-  
+  // get rid of ObjectId() wrapper in order to be able to json.stringify the object
+  product._id = product._id.toString().slice("ObjectId(");
 
   return { props: { ...product } };
 }

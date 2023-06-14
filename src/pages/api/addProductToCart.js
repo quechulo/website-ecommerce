@@ -1,11 +1,11 @@
-import { insertNewUser } from "../../../db/db-utils";
+import { insertProdToCart } from "../../../db/db-utils";
 
 async function handler(req, res) {
     if (req.method === "POST") {
         const email = req.body.email;
-        const cart = req.body.cart;
+        const productId = req.body.productId;
     
-        const result = await insertNewUser({email: email, cart: cart})
+        const result = await insertProdToCart(email, productId)
     
         res.status(201).json({ message: result, email: email });
       }
