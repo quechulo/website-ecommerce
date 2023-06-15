@@ -1,7 +1,6 @@
 import { MongoClient } from "mongodb";
 const { ObjectId } = require('mongodb');
 import { password } from "../passwords";
-import { currentUser } from "@clerk/nextjs";
 
 async function connectDatabase() {
   return await MongoClient.connect(
@@ -118,8 +117,98 @@ export async function insertProdToCart(userEmail, prodId) {
 
 }
 
-export async function loadCartItems() {
-  const user = await currentUser();
-  console.log(user);
+export async function loadCartItems(userEmail) {
+  let client;
+  try {
+    client = await connectDatabase();
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Connection to database failed!" + error.message });
+    return;
+  }
+  try {
+    const db = client.db("users");
+    const query = { email: userEmail };
+    const result = await db.collection("details").findOne(query);
+    if (!result) {
+      console.log("there is no such user")
+      res
+      .status(300)
+      .json({ message: "there is no such user" + result });
+      return;
+    }
+    client.close();
+    return result.cart;
+  } catch (error) {
+    return;
+  }
+
+}
+
+export async function insertNewOrder(data) {
+  let client;
+  try {
+    client = await connectDatabase();
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Connection to database failed!" + error.message });
+    return;
+  }
+  try {
+    const db = client.db("orders");
+    const result = await db.collection("all_orders").insertOne(data);
+    client.close();
+    res
+      .status(200)
+      .json({ message: "Order added successfully" + result });
+  } catch (error) {
+    console.log("reading database failed")
+    return;
+  }
+}
+
+export async function deleteProdFromCart(userEmail, prodId) {
+  let client;
+  try {
+    client = await connectDatabase();
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Connection to database failed!" + error.message });
+    return;
+  }
+  try {
+    const db = client.db("users");
+    const query = { email: userEmail };
+    const result = await db.collection("details").findOne(query);
+    
+    if (!result) {
+      console.log("there is no such user")
+      res
+      .status(300)
+      .json({ message: "there is no such user" + result });
+      return;
+    }
+    // console.log("result from db-utils: ", result._id = result._id.toString().slice("ObjectId("))
+    const filter = { _id: result._id };
+    const update = { $pull: { cart: prodId } }; // Delete specific cart value
+    const update_result = await db.collection("details").updateOne(filter, update);
+    console.log("update_result: ", update_result)
+  }
+  catch (error) {
+    console.log("reading collection failed")
+    return;
+  }
+  try {
+    client.close();
+    res
+      .status(200)
+      .json({ message: "Item added successfully" + result });
+  } catch (error) {
+    console.log("reading database failed")
+    return;
+  }
 
 }
