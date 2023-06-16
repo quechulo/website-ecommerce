@@ -212,3 +212,30 @@ export async function deleteProdFromCart(userEmail, prodId) {
   }
 
 }
+
+export async function loadUserOrders(userEmail) {
+  let client;
+  try {
+    client = await connectDatabase();
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Connection to database failed!" + error.message });
+    return;
+  }
+  try {
+    const db = client.db("orders");
+    const query = { email: userEmail };
+    const result = await db.collection("all_orders").find(query).toArray();
+    client.close();
+    console.log(result);
+    return result;
+  }
+  catch (error) {
+    console.log(error.stack, "reading collection failed")
+    if (client) {
+      client.close()
+    }
+    return;
+  }
+}

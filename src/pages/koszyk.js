@@ -1,11 +1,11 @@
 import ProductItem from "@/components/products/ProductItem/ProductItem";
 import { Fragment, useEffect, useState } from "react";
 import { useUser } from "@clerk/nextjs";
-import { findProductById, loadCartItems } from "../../db/db-utils";
+import { findProductById, loadCartItems, loadUserOrders } from "../../db/db-utils";
 import styles from "@/styles/koszyk.module.css";
 
 const Koszyk = (props) => {
-  let { products } = props;
+  let { products, orders } = props;
   const [actualProducts, setActualProducts] = useState(products);
   const [sumToPay, setSumToPay] = useState(0);
   const [logedUserEmail, setLogedUserEmail] = useState(null);
@@ -14,9 +14,10 @@ const Koszyk = (props) => {
   useEffect(() => {
     if (isLoaded && user) {
       handleSumToPay();
+      console.log(orders);
       setLogedUserEmail(user.emailAddresses[0].emailAddress);
     }
-  }, [isLoaded, user, actualProducts]);
+  }, [isLoaded, user, actualProducts, orders]);
 
   const handleSumToPay = () => {
     let sum = 0;
@@ -100,6 +101,14 @@ const Koszyk = (props) => {
         </button>
         <h4>Podsumowanie: {sumToPay} PLN</h4>
       </div>
+          <aside className={styles.aside}>
+            <h3>Twoje zamówienia:</h3>
+            <ol>
+              {orders.map((order) => (
+                <li key={order._id}>{order._id} </li>
+              ))}
+            </ol>
+          </aside>
     </Fragment>
   );
 };
@@ -118,9 +127,16 @@ export async function getServerSideProps() {
     }
   }
 
+  const orders = await loadUserOrders("fecosen627@anwarb.com");
+  console.log("orders: ", orders);
+  orders.map((order) => {
+    order._id = order._id.toString().slice("ObjectId(");
+  });
+  console.log("orders: ", orders);
   return {
     props: {
       products: products,
+      orders: orders,
     },
   };
 }
