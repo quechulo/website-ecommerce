@@ -5,6 +5,6 @@ export default authMiddleware({
   });
 
 export const config = {
-  matcher: ["/(api|trpc)(.*)"],
+  matcher: ["/(api|trpc)(.*)", "/koszyk"],
   // /((?!.*\\..*|_next).*)", "/(api|trpc)(.*)
 };
