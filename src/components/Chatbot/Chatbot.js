@@ -64,7 +64,7 @@ const Chatbot = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ message: enteredText, sender: "user" }),
+      body: JSON.stringify({ message: enteredText, sender: "user", userEmail: "fecosen627@anwarb.com" }),
     })
       .then((response) => response.json())
       .then((data) => {
@@ -75,7 +75,7 @@ const Chatbot = () => {
           data.answer.includes(
             "Niestety nie jestem w stanie odpowiedzieć na to pytanie,"
           ) ||
-          data.sender === "bert"
+          data.sender === "bert" || data.sender === "order_query"
         ) {
           setSendEndpoint("send-fresh");
         } else {
@@ -182,7 +182,6 @@ const Chatbot = () => {
           />
         )}
       </div>
-      );
     </>
   );
 };

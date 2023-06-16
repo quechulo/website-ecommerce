@@ -5,13 +5,21 @@ import { Inter } from "next/font/google";
 import { findProductById } from "../../db/db-utils";
 import { useState, useRef, useEffect } from "react";
 import ProductItem from "@/components/products/ProductItem/ProductItem";
+import { useUser } from "@clerk/nextjs";
 
 const inter = Inter({ subsets: ["latin"] });
 
 function HomePage(props) {
   const shoes = props.products.shoes;
   const clothes = props.products.clothes;
-  console.log(props.products);
+  // console.log(props.products);
+
+  const user = useUser();
+
+  useEffect(() => {
+    console.log("user:", user)
+  }, [user]);
+
 
   return (
     <div className={styles["homepage-container"]}>
@@ -54,6 +62,8 @@ function HomePage(props) {
       </main>
       <footer>
         <div>Footer content</div>
+        <div> {user.isSignedIn} </div>
+
       </footer>
     </div>
   );
