@@ -9,6 +9,8 @@ import {
 import styles from "@/styles/koszyk.module.css";
 import Loading from "@/components/helpers/Loading";
 
+import { clerkClient, getAuth, buildClerkProps } from "@clerk/nextjs/server";
+
 const Koszyk = (props) => {
   let { products, orders } = props;
   const [actualProducts, setActualProducts] = useState(products);
@@ -142,8 +144,24 @@ const Koszyk = (props) => {
   );
 };
 
-export async function getServerSideProps() {
-  const prods = await loadCartItems("fecosen627@anwarb.com");
+export const getServerSideProps = async ctx => {
+  const { userId } = getAuth(ctx.req)
+  console.log("userId: ", userId);
+  if (!userId) {
+    return {
+      redirect: {
+        destination: "/sign-in?redirect_url=" + ctx.resolvedUrl,
+        permanent: false,
+      },
+    };
+  }
+  const user = userId ? await clerkClient.users.getUser(userId) : undefined;
+  console.log("user email from server-side: ", user.emailAddresses[0].emailAddress);
+  let userEmail = user.emailAddresses[0].emailAddress;
+  if (!userEmail) {
+    userEmail = " ";
+  }
+  const prods = await loadCartItems(userEmail);
   let products = [];
   if (prods) {
     for (const prod_id of prods) {
@@ -158,7 +176,7 @@ export async function getServerSideProps() {
     }
   }
 
-  const orders = await loadUserOrders("");
+  const orders = await loadUserOrders(userEmail);
   console.log("orders: ", orders);
   orders.map((order) => {
     order._id = order._id.toString().slice("ObjectId(");
