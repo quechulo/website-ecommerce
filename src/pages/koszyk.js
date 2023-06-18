@@ -1,5 +1,5 @@
 import ProductItem from "@/components/products/ProductItem/ProductItem";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useState, useContext } from "react";
 import { useUser } from "@clerk/nextjs";
 import {
   findProductById,
@@ -9,19 +9,24 @@ import {
 import styles from "@/styles/koszyk.module.css";
 import Loading from "@/components/helpers/Loading";
 
+import { UserContext } from "../../src/pages/_app";
+
 const Koszyk = (props) => {
   let { products, orders } = props;
   const [actualProducts, setActualProducts] = useState(products);
   const [sumToPay, setSumToPay] = useState(0);
-  const [logedUserEmail, setLogedUserEmail] = useState(null);
+  const [loggedUserEmail, setLogedUserEmail] = useState(" ");
   const { isLoaded, isSignedIn, user } = useUser();
+  const { userEmail, setUserEmail } = useContext(UserContext);
+
 
   useEffect(() => {
     if (isLoaded && user) {
       handleSumToPay();
       setLogedUserEmail(user.emailAddresses[0].emailAddress);
+      setUserEmail(loggedUserEmail);
     }
-  }, [isLoaded, user, actualProducts]);
+  }, [isLoaded, user, actualProducts, loggedUserEmail, setUserEmail]);
 
   const handleSumToPay = () => {
     let sum = 0;
@@ -143,6 +148,8 @@ const Koszyk = (props) => {
 };
 
 export async function getServerSideProps() {
+
+
   const prods = await loadCartItems("fecosen627@anwarb.com");
   let products = [];
   if (prods) {
@@ -158,7 +165,7 @@ export async function getServerSideProps() {
     }
   }
 
-  const orders = await loadUserOrders("");
+  const orders = await loadUserOrders("fecosen627@anwarb.com");
   console.log("orders: ", orders);
   orders.map((order) => {
     order._id = order._id.toString().slice("ObjectId(");
@@ -170,6 +177,6 @@ export async function getServerSideProps() {
       orders: orders,
     },
   };
-}
+};
 
 export default Koszyk;
