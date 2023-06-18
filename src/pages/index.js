@@ -3,9 +3,11 @@ import Image from "next/image";
 import styles from "./index.module.css";
 import { Inter } from "next/font/google";
 import { findProductById } from "../../db/db-utils";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useContext } from "react";
 import ProductItem from "@/components/products/ProductItem/ProductItem";
 import { useUser } from "@clerk/nextjs";
+
+import { UserContext } from "./_app";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -13,12 +15,20 @@ function HomePage(props) {
   const shoes = props.products.shoes;
   const clothes = props.products.clothes;
   // console.log(props.products);
+  const { isLoaded, isSignedIn, user } = useUser();
+  const { userEmail, setUserEmail } = useContext(UserContext);
+  const [email, setEmail] = useState("");
 
-  const user = useUser();
 
   useEffect(() => {
-    console.log("user:", user)
-  }, [user]);
+    if (isLoaded && user) {
+      console.log("user:", user)
+      setEmail(user.emailAddresses[0].emailAddress);
+      console.log("email:", email);
+      setUserEmail(email);
+      console.log("userEmail:", userEmail);
+    }
+  }, [user, isLoaded, setUserEmail, email, userEmail]);
 
 
   return (
@@ -62,7 +72,7 @@ function HomePage(props) {
       </main>
       <footer>
         <div>Footer content</div>
-        <div> {user.isSignedIn} </div>
+        <div> {isSignedIn ? <p>tak {userEmail}</p> : <p>nie</p>} </div>
 
       </footer>
     </div>

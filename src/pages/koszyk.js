@@ -1,5 +1,5 @@
 import ProductItem from "@/components/products/ProductItem/ProductItem";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useState, useContext } from "react";
 import { useUser } from "@clerk/nextjs";
 import {
   findProductById,
@@ -10,20 +10,24 @@ import styles from "@/styles/koszyk.module.css";
 import Loading from "@/components/helpers/Loading";
 
 import { clerkClient, getAuth, buildClerkProps } from "@clerk/nextjs/server";
+import { UserContext } from "../../src/pages/_app";
 
 const Koszyk = (props) => {
   let { products, orders } = props;
   const [actualProducts, setActualProducts] = useState(products);
   const [sumToPay, setSumToPay] = useState(0);
-  const [logedUserEmail, setLogedUserEmail] = useState(null);
+  const [loggedUserEmail, setLogedUserEmail] = useState(" ");
   const { isLoaded, isSignedIn, user } = useUser();
+  const { userEmail, setUserEmail } = useContext(UserContext);
+
 
   useEffect(() => {
     if (isLoaded && user) {
       handleSumToPay();
       setLogedUserEmail(user.emailAddresses[0].emailAddress);
+      setUserEmail(loggedUserEmail);
     }
-  }, [isLoaded, user, actualProducts]);
+  }, [isLoaded, user, actualProducts, loggedUserEmail, setUserEmail]);
 
   const handleSumToPay = () => {
     let sum = 0;
@@ -188,6 +192,6 @@ export const getServerSideProps = async ctx => {
       orders: orders,
     },
   };
-}
+};
 
 export default Koszyk;

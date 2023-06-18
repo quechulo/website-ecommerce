@@ -1,7 +1,10 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import styles from "./Chatbot.module.css";
 import Link from "next/link";
 import Image from "next/image";
+
+import { UserContext } from "../../pages/_app";
+import { useUser } from "@clerk/nextjs";
 
 const Chatbot = () => {
   const [showChat, setShowChat] = useState(false);
@@ -11,7 +14,25 @@ const Chatbot = () => {
   const [sendEndpoint, setSendEndpoint] = useState("send-fresh");
   const [loadingMsg, setLoadingMsg] = useState(false);
   const [messageSent, setMessageSent] = useState("");
+  const { isLoaded, isSignedIn, user } = useUser();
+  const { userEmail, setUserEmail } = useContext(UserContext);
 
+  useEffect(() => {
+    if (isLoaded && user) {
+      console.log("user:", user)
+      console.log("email:", user.emailAddresses[0].emailAddress);
+      setUserEmail(user.emailAddresses[0].emailAddress);
+      console.log("userEmail:", userEmail);
+    }
+    else if (isLoaded && !isSignedIn) {
+      console.log("user:", user)
+      console.log("email:", "guest");
+      setUserEmail("guest");
+      // Reset conversation after user logs out
+      handleChangeContext();
+    }
+  }, [isLoaded, user, setUserEmail, userEmail, isSignedIn]);
+  
   useEffect(() => {
     const messagesElements = allMessages.map((msg, index) => {
       if (msg[1] == "user") {
@@ -53,6 +74,7 @@ const Chatbot = () => {
     setMessageSent(enteredText);
     if (enteredText.trim().length === 0) {
       console.log("Empty message");
+      messageInputRef.current.value = "Wiadomość nie może być pusta :("
       return;
     }
     messageInputRef.current.value = " ";
@@ -64,7 +86,7 @@ const Chatbot = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ message: enteredText, sender: "user", userEmail: "fecosen627@anwarb.com" }),
+      body: JSON.stringify({ message: enteredText, sender: "user", userEmail: userEmail }),
     })
       .then((response) => response.json())
       .then((data) => {
@@ -94,7 +116,6 @@ const Chatbot = () => {
     fetch("http://127.0.0.1:5000/fresh-conversation")
       .then((response) => response.json())
       .then((data) => {
-        // handleMessages(data.messages);
         console.log(data.status);
       })
       .catch((error) => {
