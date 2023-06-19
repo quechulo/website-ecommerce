@@ -12,22 +12,21 @@ import Loading from "@/components/helpers/Loading";
 import { clerkClient, getAuth, buildClerkProps } from "@clerk/nextjs/server";
 import { UserContext } from "../../src/pages/_app";
 
+import { clerkClient, getAuth, buildClerkProps } from "@clerk/nextjs/server";
+
 const Koszyk = (props) => {
-  let { products, orders } = props;
+  let { products, orders, serverUserEmail } = props;
   const [actualProducts, setActualProducts] = useState(products);
   const [sumToPay, setSumToPay] = useState(0);
-  const [loggedUserEmail, setLogedUserEmail] = useState(" ");
   const { isLoaded, isSignedIn, user } = useUser();
   const { userEmail, setUserEmail } = useContext(UserContext);
-
 
   useEffect(() => {
     if (isLoaded && user) {
       handleSumToPay();
-      setLogedUserEmail(user.emailAddresses[0].emailAddress);
-      setUserEmail(loggedUserEmail);
+      setUserEmail(user.emailAddresses[0].emailAddress);
     }
-  }, [isLoaded, user, actualProducts, loggedUserEmail, setUserEmail]);
+  }, [isLoaded, user, actualProducts, setUserEmail]);
 
   const handleSumToPay = () => {
     let sum = 0;
@@ -52,7 +51,7 @@ const Koszyk = (props) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        email: logedUserEmail,
+        email: userEmail,
         productId: productId,
       }),
     })
@@ -73,7 +72,7 @@ const Koszyk = (props) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        email: "fecosen627@anwarb.com",
+        email: userEmail,
         products: prodIds,
         total: sumToPay,
       }),
@@ -128,8 +127,10 @@ const Koszyk = (props) => {
           <aside className={styles.aside}>
             {orders.length === 0 ? (
               <>
-              <h3>Nie posiadasz jeszcze żadnych zamówień</h3>
-              <h4>Dodaj produkty do koszyka i złóż zamównienie w swoim koszyku!</h4>
+                <h3>Nie posiadasz jeszcze żadnych zamówień</h3>
+                <h4>
+                  Dodaj produkty do koszyka i złóż zamównienie w swoim koszyku!
+                </h4>
               </>
             ) : (
               <>
@@ -190,6 +191,7 @@ export const getServerSideProps = async ctx => {
     props: {
       products: products,
       orders: orders,
+      serverUserEmail: userEmail,
     },
   };
 };
