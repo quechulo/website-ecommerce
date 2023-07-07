@@ -19,29 +19,41 @@ const Chatbot = () => {
 
   useEffect(() => {
     if (isLoaded && user) {
-      console.log("user:", user)
+      console.log("user:", user);
       console.log("email:", user.emailAddresses[0].emailAddress);
       setUserEmail(user.emailAddresses[0].emailAddress);
       console.log("userEmail:", userEmail);
-    }
-    else if (isLoaded && !isSignedIn) {
-      console.log("user:", user)
+    } else if (isLoaded && !isSignedIn) {
+      console.log("user:", user);
       console.log("email:", "guest");
       setUserEmail("guest");
       // Reset conversation after user logs out
       handleChangeContext();
     }
   }, [isLoaded, user, setUserEmail, userEmail, isSignedIn]);
-  
+
   useEffect(() => {
+    const regex = /(https?:\/\/[^\s]+)[^a-zA-Z0-9]+$/;
+    const subRegex = /[.).]/gi;
     const messagesElements = allMessages.map((msg, index) => {
       if (msg[1] == "user") {
         return (
           <div className={styles.messageCloudSent}>
-            <div className={styles.message + " " + styles.sent}>{msg[0]}</div>
+            <div className={`${styles.message} ${styles.sent}`}>{msg[0]} </div>
           </div>
         );
       } else {
+        msg[0] = msg[0] + '.';
+        const linkContent = msg[0].match(regex);
+        let clearLink;
+        if (linkContent) {
+          clearLink = linkContent[0].replace(subRegex, "");
+          let index = msg[0].indexOf(linkContent[0]);
+          let newMessage = msg[0].substr(0, index) + msg[0].substr(index + linkContent[0].length);
+          msg[0] = newMessage;
+        }
+
+        console.log("linkContent:", linkContent);
         return (
           <div className={styles.messageCloudReceived}>
             <img
@@ -53,6 +65,7 @@ const Chatbot = () => {
             />
             <div className={styles.message + " " + styles.received}>
               {msg[0]}
+              {clearLink && <Link href={clearLink}> link</Link>}
             </div>
           </div>
         );
@@ -74,7 +87,7 @@ const Chatbot = () => {
     setMessageSent(enteredText);
     if (enteredText.trim().length === 0) {
       console.log("Empty message");
-      messageInputRef.current.value = "Wiadomość nie może być pusta :("
+      messageInputRef.current.value = "Wiadomość nie może być pusta :(";
       return;
     }
     messageInputRef.current.value = " ";
@@ -86,7 +99,11 @@ const Chatbot = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ message: enteredText, sender: "user", userEmail: userEmail }),
+      body: JSON.stringify({
+        message: enteredText,
+        sender: "user",
+        userEmail: userEmail,
+      }),
     })
       .then((response) => response.json())
       .then((data) => {
@@ -97,7 +114,8 @@ const Chatbot = () => {
           data.answer.includes(
             "Niestety nie jestem w stanie odpowiedzieć na to pytanie,"
           ) ||
-          data.sender === "bert" || data.sender === "order_query"
+          data.sender === "bert" ||
+          data.sender === "order_query"
         ) {
           setSendEndpoint("send-fresh");
         } else {
@@ -160,7 +178,7 @@ const Chatbot = () => {
             <div className={styles.messageContainer}>{messagesList}</div>
 
             <div className={styles.containerBottom}>
-              <button className={styles.button} onClick={handleChangeContext}>
+              <button className={`${styles.button} ${styles.changeContext}`} onClick={handleChangeContext}>
                 Zmień temat rozmowy
               </button>
               <div className={styles.inputContainer}>

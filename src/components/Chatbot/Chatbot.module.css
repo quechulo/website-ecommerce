@@ -121,7 +121,7 @@
   align-items: center;
   justify-content: space-evenly;
   padding: 10px;
-  border-radius: 0 5px 5px 0;
+  border-radius: 0 0 5px 5px;
   background-color: #98dff9;
 }
 
@@ -153,6 +153,10 @@
   color: #fff;
   border: none;
   cursor: pointer;
+}
+
+.changeContext {
+  border-radius: 5px 5px 0 0;
 }
 
 .chatbot-img {
