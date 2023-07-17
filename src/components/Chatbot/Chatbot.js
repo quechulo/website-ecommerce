@@ -38,7 +38,7 @@ const Chatbot = () => {
     const messagesElements = allMessages.map((msg, index) => {
       if (msg[1] == "user") {
         return (
-          <div className={styles.messageCloudSent}>
+          <div key={index} className={styles.messageCloudSent}>
             <div className={`${styles.message} ${styles.sent}`}>{msg[0]} </div>
           </div>
         );
@@ -55,7 +55,7 @@ const Chatbot = () => {
 
         console.log("linkContent:", linkContent);
         return (
-          <div className={styles.messageCloudReceived}>
+          <div key={index} className={styles.messageCloudReceived}>
             <img
               className={styles["chatbot-img"]}
               src="/icons8-chatbot.png"
