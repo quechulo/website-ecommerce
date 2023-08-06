@@ -36,18 +36,18 @@ function HomePage(props) {
       <main className={styles["main-content-container"]}>
         <div className={styles["first-row"]}>OUR Hot take</div>
         <div className={styles["second-row"]}>
-          <div class={styles["cards"]}>
-            <div class={`${styles.blue} ${styles.card}`}>
-              <p class={styles["tip"]}>Buty</p>
-              <p class={styles["second-text"]}>Lorem Ipsum</p>
+          <div className={styles["cards"]}>
+            <div className={`${styles.blue} ${styles.card}`}>
+              <p className={styles["tip"]}>Buty</p>
+              <p className={styles["second-text"]}>Lorem Ipsum</p>
             </div>
-            <div class={`${styles.blue} ${styles.card}`}>
-              <p class={styles["tip"]}>Dresy</p>
-              <p class={styles["second-text"]}>Lorem Ipsum</p>
+            <div className={`${styles.blue} ${styles.card}`}>
+              <p className={styles["tip"]}>Dresy</p>
+              <p className={styles["second-text"]}>Lorem Ipsum</p>
             </div>
-            <div class={`${styles.blue} ${styles.card}`}>
-              <p class={styles["tip"]}>T-shirty</p>
-              <p class={styles["second-text"]}>Lorem Ipsum</p>
+            <div className={`${styles.blue} ${styles.card}`}>
+              <p className={styles["tip"]}>T-shirty</p>
+              <p className={styles["second-text"]}>Lorem Ipsum</p>
             </div>
           </div>
         </div>
