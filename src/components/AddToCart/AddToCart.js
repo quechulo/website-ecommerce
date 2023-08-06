@@ -9,6 +9,10 @@ const AddToCart = (props) => {
     // Implement your logic to add the product to the cart
     console.log("Product added to cart:", product);
     console.log("props:", props);
+    if (!userEmail || userEmail == "guest") {
+      alert("Zaloguj się aby dodać produkt do koszyka");
+      return;
+    }
     fetch(`/api/addProductToCart`, {
       method: "POST",
       headers: {
