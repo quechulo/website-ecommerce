@@ -161,11 +161,15 @@ export const getServerSideProps = async ctx => {
     };
   }
   const user = userId ? await clerkClient.users.getUser(userId) : undefined;
-  console.log("user email from server-side: ", user.emailAddresses[0].emailAddress);
+  console.log(
+    "user email from server-side: ",
+    user.emailAddresses[0].emailAddress
+  );
   let userEmail = user.emailAddresses[0].emailAddress;
   if (!userEmail) {
-    userEmail = " ";
+    userEmail = "guest";
   }
+
   const prods = await loadCartItems(userEmail);
   let products = [];
   if (prods) {
