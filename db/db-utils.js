@@ -205,7 +205,7 @@ export async function deleteProdFromCart(userEmail, prodId) {
     client.close();
     res
       .status(200)
-      .json({ message: "Item added successfully" + result });
+      .json({ message: "Item deleted successfully" + result });
   } catch (error) {
     console.log("reading database failed")
     return;
