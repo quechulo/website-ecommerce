@@ -9,9 +9,7 @@ import {
 import styles from "@/styles/koszyk.module.css";
 import Loading from "@/components/helpers/Loading";
 
-import { clerkClient, getAuth, buildClerkProps } from "@clerk/nextjs/server";
 import { UserContext } from "../../src/pages/_app";
-
 import { clerkClient, getAuth, buildClerkProps } from "@clerk/nextjs/server";
 
 const Koszyk = (props) => {
