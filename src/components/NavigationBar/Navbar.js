@@ -62,7 +62,7 @@ export default function Navbar() {
               <Dropdown.Item
                   as="a"
                   style={{ textDecoration: "none" }}
-                  href="/about"
+                  href="/onas"
                 >
                   O Nas
                 </Dropdown.Item>
@@ -119,7 +119,7 @@ export default function Navbar() {
           {/* <Link href="/products" className={styles['nav-link']}>Products</Link> */}
 
           <li className={styles["nav-item"]}>
-            <Link className={styles["nav-link"]} href="/about">
+            <Link className={styles["nav-link"]} href="/onas">
               O nas
             </Link>
           </li>

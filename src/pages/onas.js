@@ -10,7 +10,7 @@ function AboutPage() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <div>O Nas</div>
+        <h1>O Nas</h1>
         <h3>
           Witamy w naszym sklepie Buy Stuff. W naszej ofercie posiadamy wiele
           markowych butów i ubrań. Oferujemy najlepsze ceny i staramy się
