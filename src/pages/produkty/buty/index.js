@@ -11,7 +11,7 @@ const AllShoesPage = ({ products }) => {
 
 export default AllShoesPage;
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
     const res = await fetch("http://localhost:3000/api/buty");
     const products = await res.json();
     return {

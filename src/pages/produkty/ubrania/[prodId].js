@@ -1,4 +1,3 @@
-import { useRouter } from "next/router";
 import AddToCart from "@/components/AddToCart/AddToCart";
 import { findProductById } from "../../../../db/db-utils";
 import styles from "@/styles/shoePage.module.css";
