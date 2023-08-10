@@ -34,7 +34,7 @@ const Chatbot = () => {
 
   useEffect(() => {
     const regex = /(https?:\/\/[^\s]+)[^a-zA-Z0-9]+$/;
-    const subRegex = /[.).]/gi;
+    const subRegex = /[[.).]/gi;
     const messagesElements = allMessages.map((msg, index) => {
       if (msg[1] == "user") {
         return (
@@ -43,17 +43,17 @@ const Chatbot = () => {
           </div>
         );
       } else {
-        msg[0] = msg[0] + '.';
-        const linkContent = msg[0].match(regex);
-        let clearLink;
-        if (linkContent) {
-          clearLink = linkContent[0].replace(subRegex, "");
-          let index = msg[0].indexOf(linkContent[0]);
-          let newMessage = msg[0].substr(0, index) + msg[0].substr(index + linkContent[0].length);
-          msg[0] = newMessage;
-        }
+        
+        let clearLink = msg[2];
+        msg[0] = msg[0].replace('[link do produktu]', "");
+        // if (linkContent) {
+        //   // clearLink = clearLink.replace('[link do produktu]', "");
+        //   clearLink = linkContent[0].replace(subRegex, "");
+        //   let index = msg[0].indexOf(linkContent[0]);
+        //   let newMessage = msg[0].substr(0, index) + msg[0].substr(index + linkContent[0].length);
+        //   msg[0] = newMessage;
+        // }
 
-        console.log("linkContent:", linkContent);
         return (
           <div key={index} className={styles.messageCloudReceived}>
             <img
