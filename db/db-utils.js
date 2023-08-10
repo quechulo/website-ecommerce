@@ -26,11 +26,10 @@ export async function findProductById(id, collection, database) {
     client.close();
     return result
   } catch (error) {
+    client.close();
     console.log("reading database failed")
     return;
   }
-
-  client.close();
 }
 
 export async function insertNewUser(data) {

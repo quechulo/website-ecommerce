@@ -1,0 +1,33 @@
+#goBack {
+  margin-top: 40px;
+  width: 12em;
+  height: 3em;
+  border-radius: 30em;
+  font-size: 17px;
+  font-weight: 700;
+  font-family: inherit;
+  border: none;
+  position: relative;
+  overflow: hidden;
+  z-index: 0;
+  background-color: #f2f2f2;
+  box-shadow: 6px 6px 12px #dbdbdb, -6px -6px 12px #ffffff;
+}
+
+#goBack::before {
+  content: "";
+  width: 0;
+  height: 3em;
+  border-radius: 30em;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-image: linear-gradient(to right, #9afc9c 0%, #1cbe2a 100%);
+  transition: 0.5s ease;
+  display: block;
+  z-index: -1;
+}
+
+#goBack::before {
+  width: 12em;
+}
