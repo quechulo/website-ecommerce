@@ -2,7 +2,7 @@ import { MongoClient } from "mongodb";
 const { ObjectId } = require('mongodb');
 import { password } from "../passwords";
 
-async function connectDatabase() {
+export async function connectDatabase() {
   return await MongoClient.connect(
     `mongodb+srv://Admindb:${password}@cluster0.bmmwhmg.mongodb.net/?retryWrites=true&w=majority`
   );
