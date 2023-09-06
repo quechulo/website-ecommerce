@@ -1,17 +1,21 @@
 import AddToCart from "@/components/AddToCart/AddToCart";
 import { findProductById } from "../../../../db/db-utils";
 import styles from "@/styles/shoePage.module.css";
+import { useUser } from "@clerk/nextjs";
+import { useEffect, useState } from "react";
 
 const ClothIdPage = (props) => {
   const { ...product } = props;
   const { isLoaded, isSignedIn, user } = useUser();
+  const [userEmail, setUserEmail] = useState(null);
 
-  // useEffect(() => {
-  //   if (!isLoaded || !isSignedIn) {
-  //     return null
-  //   }
-  //   console.log("userId", user.emailAddresses[0].emailAddress);
-  // }, [isLoaded, isSignedIn, user]);
+  useEffect(() => {
+    if (isLoaded && user) {
+      setUserEmail(user.emailAddresses[0].emailAddress)
+      console.log('user:', userEmail)
+      console.log('product', product)
+    }
+  }, [isLoaded, user]);
 
   return (
     <div className={styles["grid-container"]}>
@@ -28,7 +32,7 @@ const ClothIdPage = (props) => {
         <p id={styles["cena-p"]}>Cena: {product.price} PLN</p>
         <div className={styles["aside-bottom"]}>
           <div className={styles["color-content"]}>Kolor: {product.color}</div>
-          <AddToCart product={product} user={user} />
+          <AddToCart product={product} userEmail={userEmail} />
           {/*  */}
         </div>
       </div>
@@ -48,7 +52,7 @@ export default ClothIdPage;
 export async function getServerSideProps({ params }) {
   const { prodId } = params;
   let product = await findProductById(prodId, "clothes", "products");
-  delete product._id;
+  product._id = product._id.toString().slice("ObjectId(");
 
   return { props: { ...product } };
 }

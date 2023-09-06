@@ -22,11 +22,9 @@ function HomePage(props) {
 
   useEffect(() => {
     if (isLoaded && user) {
-      console.log("user:", user)
       setEmail(user.emailAddresses[0].emailAddress);
-      console.log("email:", email);
       setUserEmail(email);
-      console.log("userEmail:", userEmail);
+      
     }
   }, [user, isLoaded, setUserEmail, email, userEmail]);
 
@@ -90,7 +88,6 @@ export async function getServerSideProps() {
   // let shoe2 = await findProductById(prodId, "shoes", "products");
   // let shoe3 = await findProductById(prodId, "shoes", "products");
   // let cloth1 = await findProductById(, "clothes", "products");
-  console.log(shoe1);
   const products = {
     shoes: [shoe1],
     clothes: [],

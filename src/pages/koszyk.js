@@ -149,7 +149,6 @@ const Koszyk = (props) => {
 
 export const getServerSideProps = async ctx => {
   const { userId } = getAuth(ctx.req)
-  console.log("userId: ", userId);
   if (!userId) {
     return {
       redirect: {
@@ -159,22 +158,19 @@ export const getServerSideProps = async ctx => {
     };
   }
   const user = userId ? await clerkClient.users.getUser(userId) : undefined;
-  console.log(
-    "user email from server-side: ",
-    user.emailAddresses[0].emailAddress
-  );
   let userEmail = user.emailAddresses[0].emailAddress;
   if (!userEmail) {
     userEmail = "guest";
   }
 
   const prods = await loadCartItems(userEmail);
+  console.log("loadCartItems prods: ", prods);
   let products = [];
   if (prods) {
     for (const prod_id of prods) {
       let product = await findProductById(prod_id, "shoes", "products");
       if (!product) {
-        let product = await findProductById(prod_id, "clothes", "products");
+        product = await findProductById(prod_id, "clothes", "products");
       }
       if (product) {
         product._id = product._id.toString().slice("ObjectId(");
@@ -184,11 +180,9 @@ export const getServerSideProps = async ctx => {
   }
 
   const orders = await loadUserOrders(userEmail);
-  console.log("orders: ", orders);
   orders.map((order) => {
     order._id = order._id.toString().slice("ObjectId(");
   });
-  console.log("orders: ", orders);
   return {
     props: {
       products: products,

@@ -25,7 +25,7 @@ async function handler(req, res) {
       products: products,
       total: total,
       status: getRandomStatus(),
-      dateOfOrder: dateOfOrder,
+      dateOfOrder: dateOfOrder.toString(),
     });
 
     res.status(201).json({ message: result, email: email });

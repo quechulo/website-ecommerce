@@ -10,7 +10,6 @@ const ProductList = ({ products }) => {
 
   const handleProductClick = (productId) => {
     setSelectedProductId(productId);
-    console.log(previousRoute);
     if (previousRoute.includes("buty")) {
       router.push(`/produkty/buty/${productId}`);
     } else if (previousRoute.includes("ubrania")) {

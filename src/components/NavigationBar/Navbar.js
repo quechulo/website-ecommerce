@@ -128,6 +128,11 @@ export default function Navbar() {
               Koszyk
             </Link>
           </li>
+          <li className={styles["nav-item"]}>
+            <Link href="/zwroty" className={styles["nav-link"]}>
+              Reklamacje
+            </Link>
+          </li>
 
           {/* <li className={styles["nav-item"]}>
             <Link href="/account" className={styles["nav-link"]}>

@@ -19,13 +19,10 @@ const Chatbot = () => {
 
   useEffect(() => {
     if (isLoaded && user) {
-      console.log("user:", user);
-      console.log("email:", user.emailAddresses[0].emailAddress);
+      
       setUserEmail(user.emailAddresses[0].emailAddress);
-      console.log("userEmail:", userEmail);
+      
     } else if (isLoaded && !isSignedIn) {
-      console.log("user:", user);
-      console.log("email:", "guest");
       setUserEmail("guest");
       // Reset conversation after user logs out
       handleChangeContext();
