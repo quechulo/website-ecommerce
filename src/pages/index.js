@@ -14,7 +14,6 @@ const inter = Inter({ subsets: ["latin"] });
 function HomePage(props) {
   const shoes = props.products.shoes;
   const clothes = props.products.clothes;
-  // console.log(props.products);
   const { isLoaded, isSignedIn, user } = useUser();
   const { userEmail, setUserEmail } = useContext(UserContext);
   const [email, setEmail] = useState("");
@@ -53,25 +52,10 @@ function HomePage(props) {
           <ProductItem product={shoes[0]} />
           <ProductItem product={shoes[0]} />
           <ProductItem product={shoes[0]} />
-          {/* <div className={styles["productItem"]} >
-            <div className={styles["productItem-img"]}>
-              <Image
-                src={shoes[0].photos}
-                alt={shoes[0].name}
-                width={200}
-                height={200}
-              />
-            </div>
-
-            <h5>{shoes[0].name}</h5>
-            <p>{shoes[0].price} PLN</p>
-          </div> */}
         </div>
       </main>
       <footer>
         <div>Footer content</div>
-        <div> {isSignedIn ? <p>tak {userEmail}</p> : <p>nie</p>} </div>
-
       </footer>
     </div>
   );

@@ -12,8 +12,6 @@ const ClothIdPage = (props) => {
   useEffect(() => {
     if (isLoaded && user) {
       setUserEmail(user.emailAddresses[0].emailAddress)
-      console.log('user:', userEmail)
-      console.log('product', product)
     }
   }, [isLoaded, user]);
 

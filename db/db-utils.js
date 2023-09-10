@@ -94,7 +94,6 @@ export async function insertProdToCart(userEmail, prodId) {
       .json({ message: "there is no such user" + result });
       return;
     }
-    // console.log("result from db-utils: ", result._id = result._id.toString().slice("ObjectId("))
     const filter = { _id: result._id };
     const update = { $push: { cart: prodId } }; // Replace arrayField and newValue with your specific field and value
     const update_result = await db.collection("details").updateOne(filter, update);
@@ -190,7 +189,6 @@ export async function deleteProdFromCart(userEmail, prodId) {
       .json({ message: "there is no such user" + result });
       return;
     }
-    // console.log("result from db-utils: ", result._id = result._id.toString().slice("ObjectId("))
     const filter = { _id: result._id };
     const update = { $pull: { cart: prodId } }; // Delete specific cart value
     const update_result = await db.collection("details").updateOne(filter, update);
@@ -227,7 +225,6 @@ export async function loadUserOrders(userEmail) {
     const query = { email: userEmail };
     const result = await db.collection("all_orders").find(query).toArray();
     client.close();
-    console.log(result);
     return result;
   }
   catch (error) {

@@ -8,7 +8,6 @@ const AddToCart = (props) => {
   const handleAddToCart = () => {
     // Implement your logic to add the product to the cart
     console.log("Product added to cart:", product);
-    console.log("props:", props);
     if (!userEmail || userEmail == "guest") {
       alert("Zaloguj się aby dodać produkt do koszyka");
       return;
@@ -22,7 +21,6 @@ const AddToCart = (props) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("Data:", data);
       })
       .catch((error) => {
         console.error("Error:", error);

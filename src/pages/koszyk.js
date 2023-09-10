@@ -32,7 +32,6 @@ const Koszyk = (props) => {
       sum += parseFloat(prod.price.replace(",", "."));
     }
     setSumToPay(sum);
-    console.log("sum: ", sum);
   };
 
   const handleRemoveItem = (productId) => {
@@ -164,7 +163,6 @@ export const getServerSideProps = async ctx => {
   }
 
   const prods = await loadCartItems(userEmail);
-  console.log("loadCartItems prods: ", prods);
   let products = [];
   if (prods) {
     for (const prod_id of prods) {

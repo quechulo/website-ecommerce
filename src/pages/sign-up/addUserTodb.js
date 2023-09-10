@@ -12,9 +12,7 @@ function AddUserPage() {
   useEffect(() => {
     if (user) {
       const email = user.emailAddresses[0].emailAddress;
-      console.log("user:", email);
 
-      // await insertNewUser({email: user.emailAddresses[0].emailAddress})
       fetch(`/api/addUserToDb`, {
         method: "POST",
         headers: {
