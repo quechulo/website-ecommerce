@@ -43,13 +43,6 @@ const Chatbot = () => {
         
         let clearLink = msg[2];
         msg[0] = msg[0].replace('[link do produktu]', "");
-        // if (linkContent) {
-        //   // clearLink = clearLink.replace('[link do produktu]', "");
-        //   clearLink = linkContent[0].replace(subRegex, "");
-        //   let index = msg[0].indexOf(linkContent[0]);
-        //   let newMessage = msg[0].substr(0, index) + msg[0].substr(index + linkContent[0].length);
-        //   msg[0] = newMessage;
-        // }
 
         return (
           <div key={index} className={styles.messageCloudReceived}>
@@ -121,7 +114,12 @@ const Chatbot = () => {
         handleLoadMessages();
       })
       .catch((error) => {
-        console.error("Error:", error);
+        if (error.message === "Failed to fetch") {
+          alert("Wystąpił błąd z połączeniem z Chatbotem. Niestety nie jest aktualnie dostępny.");
+        } else {
+          alert("Wystąpił nieoczekiwany błąd związany z Chatbotem. Naciśnij 'Zmień temat rozmowy' i spróbuj ponownie.");
+          console.error("Error:", error);
+        }
       });
   };
 
@@ -134,26 +132,15 @@ const Chatbot = () => {
         console.log(data.status);
       })
       .catch((error) => {
+        alert("Wystąpił problem ze zmianą kontekstu rozmowy. Spróbuj ponownie.");
         console.error("Error:", error);
       });
-  };
-
-  // TODO - handle links as html elements
-  const handleMessages = (messages) => {
-    let answer = messages[messages.length - 1];
-    let start_index = answer.indexOf("http");
-    let link = answer.slice(start_index);
-
-    messages[messages.length - 1] = answer.slice(0, start_index);
-    messages.push(<Link href={link}>link</Link>);
-    setAllMessages(messages);
   };
 
   const handleLoadMessages = () => {
     fetch("http://127.0.0.1:5000/receive")
       .then((response) => response.json())
       .then((data) => {
-        // handleMessages(data.messages);
         setAllMessages(data.messages);
       })
       .catch((error) => {
