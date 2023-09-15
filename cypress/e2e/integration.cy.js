@@ -4,7 +4,7 @@ describe('Integration test', () => {
       cy.contains('Buy Stuff')
     })
   
-    it('should send a message', () => {
+    it('should send a message and receive appropriate response', () => {
       cy.request({
         method: 'POST',
         url: 'http://localhost:5000/send-fresh',

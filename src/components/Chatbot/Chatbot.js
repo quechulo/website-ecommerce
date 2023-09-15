@@ -79,6 +79,10 @@ const Chatbot = () => {
       console.log("Empty message");
       messageInputRef.current.value = "Wiadomość nie może być pusta :(";
       return;
+    } else if (enteredText.trim().length > 150) {
+      console.log("Message too long");
+      messageInputRef.current.value = "Wiadomość nie może być dłuższa niż 150 znaków :(";
+      return;
     }
     messageInputRef.current.value = " ";
     // UX Sending Message Animation

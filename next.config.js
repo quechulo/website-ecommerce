@@ -34,6 +34,10 @@ module.exports = {
         protocol: 'https',
         hostname: 'encrypted-tbn1.gstatic.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'image.ceneostatic.pl',
+      },
     ],
   },
 }
