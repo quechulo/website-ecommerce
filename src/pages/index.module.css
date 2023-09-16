@@ -9,14 +9,13 @@
 .main-content-container {
     display: grid;
     height: 100%;
-    grid-template-rows: 1fr 2fr 1fr;
+    grid-template-rows: 350px 1.3fr 1fr;
 }
 
 .first-row {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: aqua;
 }
 
 
@@ -100,3 +99,19 @@
     object-fit: cover;
     border-radius: 0.5rem;
   }
+
+.main-image {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.help-page {
+  padding: 10%;
+}
+
+main.help-page h1, main.help-page h4 {
+  text-align: center;
+  margin-bottom: 65px;
+  margin-top: 35px;
+}

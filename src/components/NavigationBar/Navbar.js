@@ -53,10 +53,6 @@ export default function Navbar() {
                 >
                   Ubrania
                 </Dropdown.Item>
-
-                <Dropdown.Item as="a" href="/">
-                  Inne
-                </Dropdown.Item>
               </Dropdown>
 
               <Dropdown.Item
@@ -110,10 +106,6 @@ export default function Navbar() {
               href="/produkty/ubrania"
             >
               Ubrania
-            </Dropdown.Item>
-
-            <Dropdown.Item as="a" href="/">
-              Inne
             </Dropdown.Item>
           </Dropdown>
           {/* <Link href="/products" className={styles['nav-link']}>Products</Link> */}

@@ -36,7 +36,7 @@ const ClothIdPage = (props) => {
       </div>
       <div className={styles["description-block"]}>
         <div className={styles["description-content"]}>
-          <p id={styles["description-p"]}>{product.type} {product.brand} {product.name}</p>
+          <p id={styles["description-p"]}>{product.brand} {product.name}</p>
           <p id={styles["description-p"]}>Opis:</p>
           <p id={styles["description-text"]}>{product.description}</p>
         </div>
